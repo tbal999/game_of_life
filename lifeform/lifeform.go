@@ -12,7 +12,7 @@ func Newlife() Lifeform {
 
 func Newline(x int) []Lifeform {
 	l := []Lifeform{}
-	for i := 0; i <= 30; i++ {
+	for i := 0; i <= x; i++ {
 		l = append(l, Newlife())
 	}
 	return l
