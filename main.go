@@ -11,6 +11,7 @@ import (
 
 //Initialise world - a 30x80 array of lifeforms
 var world = lifeform.Newworld(30, 80)
+var cycle = 0
 
 //Prints out the array - X is the lifeform is alive and blank if the lifeform is dead.
 func frame(i [][]lifeform.Lifeform) {
@@ -32,6 +33,7 @@ func frame(i [][]lifeform.Lifeform) {
 		text += "\n"
 	}
 	fmt.Println(text + "\r")
+	fmt.Printf("Cycle: %d \n", cycle)
 }
 
 //Generates a random number
@@ -52,26 +54,6 @@ func oneOrzero() int {
 		z = 1
 	}
 	return z
-}
-
-//Adjusts the state of the lifeform's next cycle depending on whether they're alive or not.
-func state(a, b, c, d, e, f, g, h, i lifeform.Lifeform) int {
-	total := b.Alive + c.Alive + d.Alive + e.Alive + f.Alive + g.Alive + h.Alive + i.Alive
-	switch a.Alive {
-	case 1:
-		switch total {
-		case 2, 3:
-			return 1
-		case 1, 4, 5, 6, 7, 8:
-			return 0
-		}
-	case 0:
-		switch total {
-		case 3:
-			return 1
-		}
-	}
-	return 0
 }
 
 //Seeds the map with new alive lifeforms randomly
@@ -111,11 +93,13 @@ func main() {
 			rand.Seed(time.Now().UTC().UnixNano())
 			reset(&world)
 			seed(&world)
+			cycle = 0
 		case "q":
 			game = false
 		default:
 			lifeform.Adjust(&world)
 			frame(world)
+			cycle++
 		}
 	}
 }
