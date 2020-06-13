@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-//Initialise world - a 30x30 array of lifeforms
+//Initialise world - a 30x80 array of lifeforms
 var world = lifeform.Newworld(30, 80)
 
 //Prints out the array - dot is the lifeform is alive and blank is the lifeform is dead.
