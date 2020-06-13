@@ -9,10 +9,10 @@ import (
 	"time"
 )
 
-//Initialise world - a 30x80 array of lifeforms
+//Initialise world - a 30x30 array of lifeforms
 var world = lifeform.Newworld(30, 80)
 
-//Prints out the array - dot is the lifeform is alive and blank is the lifeform is dead.
+//Prints out the array - X is the lifeform is alive and blank if the lifeform is dead.
 func frame(i [][]lifeform.Lifeform) {
 	text := ""
 	text += "\n\n\n\n"
@@ -76,24 +76,31 @@ func randomNumber(min, max int) int {
 	return z
 }
 
+//Generates a random number
+func oneOrzero() int {
+	z := rand.Intn(2)
+	if z < 1 {
+		z = 0
+	} else {
+		z = 1
+	}
+	return z
+}
+
 //Adjusts the state of the lifeform's next cycle depending on whether they're alive or not.
 func state(a, b, c, d, e, f, g, h, i lifeform.Lifeform) int {
+	total := b.Alive + c.Alive + d.Alive + e.Alive + f.Alive + g.Alive + h.Alive + i.Alive
 	switch a.Alive {
 	case 1:
-		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive < 2 {
-			return 0
-		}
-		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive > 3 {
-			return 0
-		}
-		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 2 {
+		switch total {
+		case 2, 3:
 			return 1
-		}
-		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 3 {
-			return 1
+		case 1, 4, 5, 6, 7, 8:
+			return 0
 		}
 	case 0:
-		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 3 {
+		switch total {
+		case 3:
 			return 1
 		}
 	}
@@ -106,8 +113,8 @@ func seed(w *[][]lifeform.Lifeform) {
 	for i := 0; i < 1200; i++ {
 		y := randomNumber(5, 25)
 		x := randomNumber(5, 70)
-		world[y][x].Alive = randomNumber(0, 2)
-		world[y][x].Next = randomNumber(0, 2)
+		world[y][x].Alive = oneOrzero()
+		world[y][x].Next = oneOrzero()
 	}
 	*w = world
 }
