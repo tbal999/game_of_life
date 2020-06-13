@@ -84,7 +84,7 @@ func reset(world *[][]lifeform.Lifeform) {
 func main() {
 	Scanner := bufio.NewScanner(os.Stdin)
 	game := true
-	fmt.Println("Game of Life - press 'n' for new spawn, 'q' to quit or anything else to run cycle")
+	fmt.Println("Game of Life - press 'n' for new generated world, 'q' to quit or press enter to run 1 cycle")
 	for game == true {
 		Scanner.Scan()
 		result := Scanner.Text()
