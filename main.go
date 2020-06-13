@@ -12,7 +12,7 @@ import (
 //Initialise world - a 30x30 array of lifeforms
 var world = lifeform.Newworld(30, 80)
 
-//Prints out the array - X is the lifeform is alive and blank if the lifeform is dead.
+//Prints out the array - dot is the lifeform is alive and blank is the lifeform is dead.
 func frame(i [][]lifeform.Lifeform) {
 	text := ""
 	text += "\n\n\n\n"
@@ -21,7 +21,7 @@ func frame(i [][]lifeform.Lifeform) {
 			if i[y][x].Alive == 0 {
 				text += " "
 			} else {
-				text += "X"
+				text += "."
 			}
 			if i[y][x].Next == 0 {
 				i[y][x].Alive = 0
