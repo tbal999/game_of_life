@@ -16,7 +16,6 @@ var world = lifeform.Newworld(30, 30)
 func frame(i [][]lifeform.Lifeform) {
 	text := ""
 	for y := range i {
-		text = ""
 		for x := range i[y] {
 			if i[y][x].Alive == 0 {
 				text += " "
@@ -29,8 +28,9 @@ func frame(i [][]lifeform.Lifeform) {
 				i[y][x].Alive = 1
 			}
 		}
-		fmt.Println(text)
+		text += "\n"
 	}
+	fmt.Println(text + "\r")
 }
 
 //Checks to see if the item in array is one away from the edge to prevent indexing errors.
@@ -75,18 +75,21 @@ func randomNumber(min, max int) int {
 	return z
 }
 
-//Adjusts the state of the lifeform depending on whether they're alive or not.
+//Adjusts the state of the lifeform's next cycle depending on whether they're alive or not.
 func state(a, b, c, d, e, f, g, h, i lifeform.Lifeform) int {
 	switch a.Alive {
 	case 1:
 		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive < 2 {
 			return 0
 		}
-		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 2 || b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 3 {
-			return 1
-		}
 		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive > 3 {
 			return 0
+		}
+		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 2 {
+			return 1
+		}
+		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 3 {
+			return 1
 		}
 	case 0:
 		if b.Alive+c.Alive+d.Alive+e.Alive+f.Alive+g.Alive+h.Alive+i.Alive == 3 {
