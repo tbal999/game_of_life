@@ -8,4 +8,4 @@ Any live cell with more than three live neighbours dies, as if by overpopulation
 Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 WHAT NEXT?
-Next I will use a gui library to make the frontend a bit prettier.
+Next I will use a gui library to make the frontend a bit prettier & use some sort of screen/window rather than console output.
