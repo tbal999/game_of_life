@@ -13,7 +13,7 @@ import (
 var world = lifeform.Newworld(30, 80)
 var cycle = 0
 
-//Prints out the array - X is the lifeform is alive and blank if the lifeform is dead.
+//Prints out the array - '.' is the lifeform is alive and blank means the lifeform is dead.
 func frame(i [][]lifeform.Lifeform) {
 	text := ""
 	text += "\n\n\n\n"
