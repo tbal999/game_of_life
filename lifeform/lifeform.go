@@ -27,7 +27,7 @@ func Newworld(y, x int) [][]Lifeform {
 }
 
 //Checks to see if the item in array is one away from the edge to prevent indexing errors
-func check(x, y int, z [][]lifeform.Lifeform) int {
+func check(x, y int, z [][]Lifeform) int {
 	switcher := ""
 	xaxis := x == len(z[0])-1
 	yaxis := y == len(z)-1
@@ -81,7 +81,7 @@ func check(x, y int, z [][]lifeform.Lifeform) int {
 }
 
 //Adjusts lifeform state depending on where it is using the 'check' function'
-func Adjust(world *[][]lifeform.Lifeform) {
+func Adjust(world *[][]Lifeform) {
 	i := *world
 	for y := range i {
 		for x := range i[y] {
@@ -180,4 +180,27 @@ func Adjust(world *[][]lifeform.Lifeform) {
 		}
 	}
 	*world = i
+}
+
+//Adjusts the state of the lifeform's next cycle depending on whether they're alive or not.
+//You can change this function and get different results.
+func state(a, b, c, d, e, f, g, h, i Lifeform) int {
+	total := b.Alive + c.Alive + d.Alive + e.Alive + f.Alive + g.Alive + h.Alive + i.Alive
+	switch a.Alive {
+	case 1:
+		switch total {
+		case 0, 1:
+			return 0
+		case 4, 5, 6, 7, 8:
+			return 0
+		case 2, 3:
+			return 1
+		}
+	case 0:
+		switch total {
+		case 3:
+			return 1
+		}
+	}
+	return 0
 }
