@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-//Initialise world - a 30x30 array of lifeforms
+//Initialise world - a 30x80 array of lifeforms
 var world = lifeform.Newworld(30, 80)
 
 //Prints out the array - X is the lifeform is alive and blank if the lifeform is dead.
@@ -32,39 +32,6 @@ func frame(i [][]lifeform.Lifeform) {
 		text += "\n"
 	}
 	fmt.Println(text + "\r")
-}
-
-//Checks to see if the item in array is one away from the edge to prevent indexing errors.
-func check(x, y int, z [][]lifeform.Lifeform) bool {
-	xaxis := len(z[0]) - 1
-	yaxis := len(z) - 1
-	if x != 0 && y != 0 {
-		if x < xaxis && y < yaxis {
-			return true
-		}
-	}
-	return false
-}
-
-//Checks each lifeform state
-func adjust(world *[][]lifeform.Lifeform) {
-	i := *world
-	for y := range i {
-		for x := range i[y] {
-			if check(x, y, i) == true {
-				i[y][x].Next = state(i[y][x],
-					i[y-1][x-1],
-					i[y-1][x],
-					i[y-1][x+1],
-					i[y+1][x-1],
-					i[y+1][x],
-					i[y+1][x+1],
-					i[y][x-1],
-					i[y][x+1])
-			}
-		}
-	}
-	*world = i
 }
 
 //Generates a random number
@@ -147,7 +114,7 @@ func main() {
 		case "q":
 			game = false
 		default:
-			adjust(&world)
+			lifeform.Adjust(&world)
 			frame(world)
 		}
 	}
