@@ -10,11 +10,12 @@ import (
 )
 
 //Initialise world - a 30x30 array of lifeforms
-var world = lifeform.Newworld(30, 30)
+var world = lifeform.Newworld(30, 80)
 
 //Prints out the array - X is the lifeform is alive and blank if the lifeform is dead.
 func frame(i [][]lifeform.Lifeform) {
 	text := ""
+	text += "\n\n\n\n"
 	for y := range i {
 		for x := range i[y] {
 			if i[y][x].Alive == 0 {
@@ -102,10 +103,11 @@ func state(a, b, c, d, e, f, g, h, i lifeform.Lifeform) int {
 //Seeds the map with new alive lifeforms randomly
 func seed(w *[][]lifeform.Lifeform) {
 	world := *w
-	for i := 0; i < 300; i++ {
+	for i := 0; i < 1200; i++ {
 		y := randomNumber(5, 25)
-		x := randomNumber(5, 25)
+		x := randomNumber(5, 70)
 		world[y][x].Alive = randomNumber(0, 2)
+		world[y][x].Next = randomNumber(0, 2)
 	}
 	*w = world
 }
