@@ -18,9 +18,9 @@ func Newline(x int) []Lifeform {
 	return l
 }
 
-func Newworld(x int) [][]Lifeform {
+func Newworld(y, x int) [][]Lifeform {
 	w := [][]Lifeform{}
-	for i := 0; i <= x; i++ {
+	for i := 0; i <= y; i++ {
 		w = append(w, Newline(x))
 	}
 	return w
