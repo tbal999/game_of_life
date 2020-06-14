@@ -1,5 +1,12 @@
 # game_of_life
-A console version of Conway's Game of Life in honour of John Horton Conway.
+A cellular automaton game engine that can handle 'Conway's Game of Life' in honour of John Horton Conway.
+Can also do other different life rules via user input.
+
+- 'Game of Life' rules in GUI
+![Game of Life in GUI](https://raw.githubusercontent.com/tbal999/game_of_life/master/gui.gif)
+- 'Coral' rules via STDOUT
+![Coral Rules in STDOUT](https://raw.githubusercontent.com/tbal999/game_of_life/master/stdout.gif)
+
 I've created the logic for the rules below:
 
 For each 'step':
