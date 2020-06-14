@@ -3,10 +3,11 @@ package lifeform
 type Lifeform struct {
 	Alive int
 	Next  int
+	Still int
 }
 
 func Newlife() Lifeform {
-	x := Lifeform{0, 0}
+	x := Lifeform{0, 0, 0}
 	return x
 }
 
