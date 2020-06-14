@@ -189,12 +189,10 @@ func state(a, b, c, d, e, f, g, h, i Lifeform) int {
 	switch a.Alive {
 	case 1:
 		switch total {
-		case 0, 1:
-			return 0
-		case 4, 5, 6, 7, 8:
-			return 0
-		case 2, 3:
+	        case 2, 3:
 			return 1
+		case 0, 1, 4, 5, 6, 7, 8:
+			return 0
 		}
 	case 0:
 		switch total {
