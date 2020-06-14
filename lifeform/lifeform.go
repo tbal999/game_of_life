@@ -26,6 +26,18 @@ func Newworld(y, x int) [][]Lifeform {
 	return w
 }
 
+func OnOff(y, x int, w *[][]Lifeform) {
+	world := *w
+	if world[y][x].Alive == 1 {
+		world[y][x].Alive = 0
+		world[y][x].Next = 0
+	} else if world[y][x].Alive == 0 {
+		world[y][x].Alive = 1
+		world[y][x].Next = 1
+	}
+	*w = world
+}
+
 //Checks to see if the item in array is one away from the edge to prevent indexing errors
 func check(x, y int, z [][]Lifeform) int {
 	switcher := ""
@@ -189,7 +201,7 @@ func state(a, b, c, d, e, f, g, h, i Lifeform) int {
 	switch a.Alive {
 	case 1:
 		switch total {
-	        case 2, 3:
+		case 2, 3:
 			return 1
 		case 0, 1, 4, 5, 6, 7, 8:
 			return 0
