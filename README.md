@@ -20,7 +20,7 @@ When you are in the lower res GUI bit:
 - press q to go back to the Main menu.
 
 Change the game rules: 
-(taken from https://en.wikipedia.org/wiki/Life-like_cellular_automaton)
+- (sourced from https://en.wikipedia.org/wiki/Life-like_cellular_automaton)
 There are 218 = 262,144 possible Life-like rules, only a small fraction of which have been studied in any detail. In the descriptions below, all rules are specified in Golly/RLE format.
 
 Notable Life-like rules:
