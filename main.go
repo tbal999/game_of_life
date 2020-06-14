@@ -45,7 +45,7 @@ func randomNumber(min, max int) int {
 	return z
 }
 
-//Generates a random number
+//Generates a 1 or a 0
 func oneOrzero() int {
 	z := rand.Intn(2)
 	if z < 1 {
