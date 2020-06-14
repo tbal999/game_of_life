@@ -17,15 +17,14 @@ import (
 )
 
 var (
-	world                  = lifeform.Newworld(200, 100)
-	cycle                  = 0
-	c                      = ui.NewCanvas()
-	p                      = widgets.NewParagraph()
-	step     time.Duration = 50
-	interval               = step * time.Millisecond
-	l                      = []int{2, 3}
-	d                      = []int{3}
-	rate                   = 30000
+	world   = lifeform.Newworld(200, 100)
+	cycle   = 0
+	c       = ui.NewCanvas()
+	p       = widgets.NewParagraph()
+	l       = []int{2, 3}
+	d       = []int{3}
+	rate    = 30000
+	counter = float64(30)
 )
 
 //Prints out the array - '.' is the lifeform is alive and blank means the lifeform is dead.
@@ -93,7 +92,8 @@ func guiframe(i [][]lifeform.Lifeform) {
 	}
 	out := fmt.Sprintf("Cycle: %d\r", cycle)
 	rulez := fmt.Sprintf("B: %d and D: %d", d, l)
-	p.Text = out + "\n" + "Rules: \n" + rulez
+	speed := fmt.Sprintf("%f", counter)
+	p.Text = out + "\n" + "Rules: \n" + rulez + "\n" + "Speed: " + speed + " ms"
 	ui.Render(c)
 	ui.Render(p)
 }
@@ -135,10 +135,27 @@ func reset(world *[][]lifeform.Lifeform) {
 //Main entry
 func main() {
 	Scanner := bufio.NewScanner(os.Stdin)
-Start:
 	world = lifeform.Newworld(200, 100)
+	rand.Seed(time.Now().UTC().UnixNano())
+	seed(&world, rate)
+Start:
 	game := true
-	fmt.Println("Game of Life Cellular Automata - Go")
+	fmt.Println(
+		`
+_________        .__  .__        .__                     
+\_   ___ \  ____ |  | |  |  __ __|  | _____ _______      
+/    \  \/_/ __ \|  | |  | |  |  \  | \__  \\_  __ \     
+\     \___\  ___/|  |_|  |_|  |  /  |__/ __ \|  | \/     
+ \______  /\___  >____/____/____/|____(____  /__|        
+        \/     \/                          \/            
+   _____          __                         __          
+  /  _  \  __ ___/  |_  ____   _____ _____ _/  |______   
+ /  /_\  \|  |  \   __\/  _ \ /     \\__  \\   __\__  \  
+/    |    \  |  /|  | (  <_> )  Y Y  \/ __ \|  |  / __ \_
+\____|__  /____/ |__|  \____/|__|_|  (____  /__| (____  /
+        \/                         \/     \/          \/ 
+
+		`)
 	fmt.Println("'n' for new generated world")
 	fmt.Println("'q' to quit")
 	fmt.Println("'g' for GUI low res version")
@@ -198,7 +215,8 @@ Start:
 		case "g":
 			fmt.Println("Entering GUI version. Menu:")
 			fmt.Println("when in GUI mode - press 'q' at any time to return to menu")
-			fmt.Println("or press 'n' at any time to refresh GUI version")
+			fmt.Println("or press 'w'/'s' to slow down / speed the rate of change (in ms)")
+			fmt.Println("press 'n' at any time to refresh GUI version")
 			fmt.Println("Press 'enter' to start GUI version...")
 			Scanner.Scan()
 			rand.Seed(time.Now().UTC().UnixNano())
@@ -210,7 +228,6 @@ Start:
 				log.Fatalf("failed to initialize termui: %v", err)
 			}
 			uiEvents := ui.PollEvents()
-			ticker := time.NewTicker(interval).C
 			for {
 				select {
 				case e := <-uiEvents:
@@ -229,9 +246,17 @@ Start:
 						reset(&world)
 						seed(&world, rate)
 						cycle = 0
+					case "s":
+						if counter > 0 {
+							counter -= 10
+						}
+					case "w":
+						if counter < 1000 {
+							counter += 10
+						}
 					}
 				// use Go's built-in tickers for updating and drawing data
-				case <-ticker:
+				case <-time.After(time.Duration(counter) * time.Millisecond):
 					cycle++
 					lifeform.Adjust(&world, l, d)
 					guiframe(world)
