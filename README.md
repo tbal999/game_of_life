@@ -12,11 +12,30 @@ Main menu:
 - press n for new generated world
 - press q to quit
 - press g for a lower res frontend GUI (rather than the standard console output)
+- press r to change the game rules!
 - press enter for one cycle, hold enter down to run dozens a second.
 
 When you are in the lower res GUI bit:
 - press n to refresh the grid 
 - press q to go back to the Main menu.
+
+Change the game rules (taken from https://en.wikipedia.org/wiki/Life-like_cellular_automaton)
+There are 218 = 262,144 possible Life-like rules, only a small fraction of which have been studied in any detail. In the descriptions below, all rules are specified in Golly/RLE format.
+
+Notable Life-like rules
+Rule	Name	Description and sources
+B1357/S1357	Replicator	Edward Fredkin's replicating automaton: every pattern is eventually replaced by multiple copies of itself.[2][3][4]
+B2/S	Seeds	All patterns are phoenixes, meaning that every live cell immediately dies, and many patterns lead to explosive chaotic growth. However, some engineered patterns with complex behavior are known.[2][5][6]
+B25/S4		This rule supports a small self-replicating pattern which, when combined with a small glider pattern, causes the glider to bounce back and forth in a pseudorandom walk.[4][7]
+B3/S012345678	Life without Death	Also known as Inkspot or Flakes. Cells that become alive never die. It combines chaotic growth with more structured ladder-like patterns that can be used to simulate arbitrary Boolean circuits.[2][4][8][9]
+B3/S23	Life	Highly complex behavior.[10][11]
+B34/S34	34 Life	Was initially thought to be a stable alternative to Life, until computer simulation found that larger patterns tend to explode. Has many small oscillators and spaceships.[2][12][13]
+B35678/S5678	Diamoeba	Forms large diamonds with chaotically fluctuating boundaries. First studied by Dean Hickerson, who in 1993 offered a $50 prize to find a pattern that fills space with live cells; the prize was won in 1999 by David Bell.[2][4][14]
+B36/S125	2x2	If a pattern is composed of 2x2 blocks, it will continue to evolve in the same form; grouping these blocks into larger powers of two leads to the same behavior, but slower. Has complex oscillators of high periods as well as a small glider.[2][15]
+B36/S23	HighLife	Similar to Life but with a small self-replicating pattern.[2][4][16]
+B3678/S34678	Day & Night	Symmetric under on-off reversal. Has engineered patterns with highly complex behavior.[2][4][17]
+B368/S245	Morley	Named after Stephen Morley; also called Move. Supports very high-period and slow spaceships.[2][4][18]
+B4678/S35678	Anneal	Also called the twisted majority rule. Symmetric under on-off reversal. Approximates the curve-shortening flow on the boundaries between live and dead cells.[19][20][21]
 
 What i plan to do next:
 Add a higher res GUI - i've managed to bungle in the canvas from 'termui' but i'm sure there's probably a better way.
