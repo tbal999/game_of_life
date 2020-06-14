@@ -25,6 +25,7 @@ var (
 	interval               = step * time.Millisecond
 	l                      = []int{2, 3}
 	d                      = []int{3}
+	rate                   = 30000
 )
 
 //Prints out the array - '.' is the lifeform is alive and blank means the lifeform is dead.
@@ -106,25 +107,15 @@ func randomNumber(min, max int) int {
 	return z
 }
 
-//Generates a random number
-func oneOrzero() int {
-	z := rand.Intn(2)
-	if z < 1 {
-		z = 0
-	} else {
-		z = 1
-	}
-	return z
-}
-
 //Seeds the map with new alive lifeforms randomly
-func seed(w *[][]lifeform.Lifeform) {
+func seed(w *[][]lifeform.Lifeform, rate int) {
 	world := *w
-	for i := 0; i < len(world[0])*200; i++ {
+	for i := 0; i < rate; i++ {
 		y := randomNumber(1, len(world)-5)
 		x := randomNumber(1, len(world[0])-5)
-		world[y][x].Alive = oneOrzero()
-		world[y][x].Next = oneOrzero()
+		if world[y][x].Alive == 0 {
+			world[y][x].Alive = 1
+		}
 	}
 	*w = world
 }
@@ -153,11 +144,19 @@ Start:
 	fmt.Println("'g' for GUI low res version")
 	fmt.Println("'i' for a list of well known rules & further information")
 	fmt.Println("'r' to change game rules")
+	fmt.Println("'s' to change number multiplier (30000 is standard)")
 	fmt.Println("'enter' to run 1 cycle on std out console")
 	for game == true {
 		Scanner.Scan()
 		result := Scanner.Text()
 		switch result {
+		case "s":
+			fmt.Println("Type in new multiplier: ")
+			Scanner.Scan()
+			rresult0 := Scanner.Text()
+			integer0, _ := strconv.Atoi(rresult0)
+			rate = integer0
+			fmt.Println("Multiplier changed! ")
 		case "r":
 			l = []int{}
 			d = []int{}
@@ -182,7 +181,7 @@ Start:
 		case "n":
 			rand.Seed(time.Now().UTC().UnixNano())
 			reset(&world)
-			seed(&world)
+			seed(&world, rate)
 			cycle = 0
 		case "q":
 			game = false
@@ -204,7 +203,7 @@ Start:
 			Scanner.Scan()
 			rand.Seed(time.Now().UTC().UnixNano())
 			world = lifeform.Newworld(200, 600)
-			seed(&world)
+			seed(&world, rate)
 			p.SetRect(95, 1, 120, 10)
 			c.SetRect(1, 1, 90, 50)
 			if err := ui.Init(); err != nil {
@@ -219,10 +218,17 @@ Start:
 					case "q", "<C-c>": // press 'q' or 'C-c' to quit
 						ui.Close()
 						goto Start
+					case "<MouseLeft>":
+						payload := e.Payload.(ui.Mouse)
+						x, y := payload.X, payload.Y
+						world[y][x].Alive = 1
+						world[y][x].Next = 1
+						p.Text = fmt.Sprintf("%d, %d", x, y)
 					case "n":
-						cycle = 0
+						rand.Seed(time.Now().UTC().UnixNano())
 						reset(&world)
-						seed(&world)
+						seed(&world, rate)
+						cycle = 0
 					}
 				// use Go's built-in tickers for updating and drawing data
 				case <-ticker:
