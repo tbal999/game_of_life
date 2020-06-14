@@ -87,7 +87,7 @@ func oneOrzero() int {
 //Seeds the map with new alive lifeforms randomly
 func seed(w *[][]lifeform.Lifeform) {
 	world := *w
-	for i := 0; i < len(world[0])*100; i++ {
+	for i := 0; i < len(world[0])*200; i++ {
 		y := randomNumber(1, len(world)-5)
 		x := randomNumber(1, len(world[0])-5)
 		world[y][x].Alive = oneOrzero()
