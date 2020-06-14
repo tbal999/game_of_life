@@ -3,12 +3,12 @@ A cellular automaton game engine that can handle 'Conway's Game of Life' in hono
 Can also do other different life rules via user input.
 Makes use of the awesome 'termui' (https://github.com/gizak/termui) library.
 
-- 'Game of Life' rules in GUI
+- 'Game of Life'
 \
 ![Game of Life](https://raw.githubusercontent.com/tbal999/game_of_life/master/gui.gif)
-- 'Coral' rules via STDOUT
+- 'Coral'
 \
-![Day&Night](https://raw.githubusercontent.com/tbal999/game_of_life/master/blob.gif)
+![Coral](https://raw.githubusercontent.com/tbal999/game_of_life/master/blob.gif)
 
 - (sourced from https://en.wikipedia.org/wiki/Life-like_cellular_automaton)
 There are 218 = 262,144 possible Life-like rules, only a small fraction of which have been studied in any detail. In the descriptions below, all rules are specified in Golly/RLE format.
