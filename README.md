@@ -50,4 +50,4 @@ Notable Life-like rules:
 -more ifo here http://www.mirekw.com/ca/rullex_life.html
 
 What i plan to do next:
-Add a higher res GUI - i've managed to bungle in the canvas from 'termui' but i'm sure there's probably a better way.
+Add a higher res GUI - i've managed to bungle in the canvas from 'termui' (https://github.com/gizak/termui) but i'm sure there's probably a better way as termui is meant for command line GUI's.
