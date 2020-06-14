@@ -13,7 +13,6 @@ import (
 	ui "github.com/gizak/termui/v3"
 )
 
-//Initialise world - a 30x80 array of lifeforms
 var world = lifeform.Newworld(200, 100)
 var cycle = 0
 var c = ui.NewCanvas()
@@ -86,9 +85,9 @@ func oneOrzero() int {
 //Seeds the map with new alive lifeforms randomly
 func seed(w *[][]lifeform.Lifeform) {
 	world := *w
-	for i := 0; i < 5000; i++ {
-		y := randomNumber(5, 180)
-		x := randomNumber(5, 90)
+	for i := 0; i < len(world[0])*100; i++ {
+		y := randomNumber(1, len(world)-5)
+		x := randomNumber(1, len(world[0])-5)
 		world[y][x].Alive = oneOrzero()
 		world[y][x].Next = oneOrzero()
 	}
@@ -111,6 +110,7 @@ func reset(world *[][]lifeform.Lifeform) {
 func main() {
 	Scanner := bufio.NewScanner(os.Stdin)
 Start:
+	world = lifeform.Newworld(200, 100)
 	game := true
 	fmt.Println("Game of Life - press 'n' for new generated world, 'q' to quit, 'g' for GUI low res version or press enter to run 1 cycle")
 	for game == true {
@@ -128,8 +128,9 @@ Start:
 			fmt.Println("Entering GUI version - press 'q' at any time to return to menu, or 'n' to refresh GUI version")
 			Scanner.Scan()
 			rand.Seed(time.Now().UTC().UnixNano())
+			world = lifeform.Newworld(200, 600)
 			seed(&world)
-			c.SetRect(0, 0, 200, 100)
+			c.SetRect(0, 0, 200, 600)
 			if err := ui.Init(); err != nil {
 				log.Fatalf("failed to initialize termui: %v", err)
 			}
