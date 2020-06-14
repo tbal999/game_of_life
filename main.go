@@ -30,12 +30,22 @@ func frame(i [][]lifeform.Lifeform) {
 			if i[y][x].Alive == 0 {
 				text += " "
 			} else {
-				text += "."
+				if i[y][x].Still < 4 {
+					text += "."
+				} else {
+					text += "x"
+				}
 			}
 			if i[y][x].Next == 0 {
 				i[y][x].Alive = 0
+				if i[y][x].Still > 0 {
+					i[y][x].Still--
+				}
 			} else {
 				i[y][x].Alive = 1
+				if i[y][x].Still <= 5 {
+					i[y][x].Still++
+				}
 			}
 		}
 		text += "\n"
@@ -51,12 +61,22 @@ func guiframe(i [][]lifeform.Lifeform) {
 			if i[y][x].Alive == 0 {
 				c.SetPoint(image.Pt(y, x), 0)
 			} else {
-				c.SetPoint(image.Pt(y, x), 2)
+				if i[y][x].Still < 4 {
+					c.SetPoint(image.Pt(y, x), 7)
+				} else {
+					c.SetPoint(image.Pt(y, x), 3)
+				}
 			}
 			if i[y][x].Next == 0 {
 				i[y][x].Alive = 0
+				if i[y][x].Still > 0 {
+					i[y][x].Still--
+				}
 			} else {
 				i[y][x].Alive = 1
+				if i[y][x].Still <= 5 {
+					i[y][x].Still++
+				}
 			}
 		}
 	}
