@@ -8,6 +8,8 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	ui "github.com/gizak/termui/v3"
@@ -109,14 +111,37 @@ func reset(world *[][]lifeform.Lifeform) {
 //Main entry
 func main() {
 	Scanner := bufio.NewScanner(os.Stdin)
+	l := []int{2, 3}
+	d := []int{3}
 Start:
 	world = lifeform.Newworld(200, 100)
 	game := true
-	fmt.Println("Game of Life - press 'n' for new generated world, 'q' to quit, 'g' for GUI low res version or press enter to run 1 cycle")
+	fmt.Println("Game of Life - press 'n' for new generated world, 'q' to quit, 'g' for GUI low res version, 'r' to change game rules - or press enter to run 1 cycle")
 	for game == true {
 		Scanner.Scan()
 		result := Scanner.Text()
 		switch result {
+		case "r":
+			l = []int{}
+			d = []int{}
+			fmt.Println("Type in numbers from 0 to 8 for rule B with commas i.e '0,1,2,3': ")
+			Scanner.Scan()
+			rresult1 := Scanner.Text()
+			ruleB := strings.Split(rresult1, ",")
+			for indexx := range ruleB {
+				integer, _ := strconv.Atoi(ruleB[indexx])
+				d = append(d, integer)
+			}
+			fmt.Println("Now type in numbers from 0 to 8 for rule S with commas i.e '0,3,6,9': ")
+			Scanner.Scan()
+			rresult2 := Scanner.Text()
+			ruleS := strings.Split(rresult2, ",")
+			for indexxx := range ruleS {
+				integer2, _ := strconv.Atoi(ruleS[indexxx])
+				l = append(l, integer2)
+			}
+			fmt.Println("Rules adjusted!")
+			goto Start
 		case "n":
 			rand.Seed(time.Now().UTC().UnixNano())
 			reset(&world)
@@ -151,12 +176,12 @@ Start:
 				// use Go's built-in tickers for updating and drawing data
 				case <-ticker:
 					cycle++
-					lifeform.Adjust(&world)
+					lifeform.Adjust(&world, l, d)
 					guiframe(world)
 				}
 			}
 		default:
-			lifeform.Adjust(&world)
+			lifeform.Adjust(&world, l, d)
 			frame(world)
 			cycle++
 		}
