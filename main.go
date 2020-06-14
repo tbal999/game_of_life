@@ -13,13 +13,19 @@ import (
 	"time"
 
 	ui "github.com/gizak/termui/v3"
+	"github.com/gizak/termui/v3/widgets"
 )
 
-var world = lifeform.Newworld(200, 100)
-var cycle = 0
-var c = ui.NewCanvas()
-var step time.Duration = 50
-var interval = step * time.Millisecond
+var (
+	world                  = lifeform.Newworld(200, 100)
+	cycle                  = 0
+	c                      = ui.NewCanvas()
+	p                      = widgets.NewParagraph()
+	step     time.Duration = 50
+	interval               = step * time.Millisecond
+	l                      = []int{2, 3}
+	d                      = []int{3}
+)
 
 //Prints out the array - '.' is the lifeform is alive and blank means the lifeform is dead.
 func frame(i [][]lifeform.Lifeform) {
@@ -32,8 +38,10 @@ func frame(i [][]lifeform.Lifeform) {
 			} else {
 				if i[y][x].Still < 4 {
 					text += "."
+				} else if i[y][x].Still < 30 {
+					text += ">"
 				} else {
-					text += "x"
+					text += "H"
 				}
 			}
 			if i[y][x].Next == 0 {
@@ -43,7 +51,7 @@ func frame(i [][]lifeform.Lifeform) {
 				}
 			} else {
 				i[y][x].Alive = 1
-				if i[y][x].Still <= 5 {
+				if i[y][x].Still <= 31 {
 					i[y][x].Still++
 				}
 			}
@@ -63,8 +71,10 @@ func guiframe(i [][]lifeform.Lifeform) {
 			} else {
 				if i[y][x].Still < 4 {
 					c.SetPoint(image.Pt(y, x), 7)
+				} else if i[y][x].Still < 30 {
+					c.SetPoint(image.Pt(y, x), 1)
 				} else {
-					c.SetPoint(image.Pt(y, x), 3)
+					c.SetPoint(image.Pt(y, x), 2)
 				}
 			}
 			if i[y][x].Next == 0 {
@@ -74,14 +84,17 @@ func guiframe(i [][]lifeform.Lifeform) {
 				}
 			} else {
 				i[y][x].Alive = 1
-				if i[y][x].Still <= 5 {
+				if i[y][x].Still <= 31 {
 					i[y][x].Still++
 				}
 			}
 		}
 	}
+	out := fmt.Sprintf("Cycle: %d\r", cycle)
+	rulez := fmt.Sprintf("B: %d and D: %d", d, l)
+	p.Text = out + "\n" + "Rules: \n" + rulez
 	ui.Render(c)
-	fmt.Printf("Cycle: %d\r", cycle)
+	ui.Render(p)
 }
 
 //Generates a random number
@@ -131,12 +144,16 @@ func reset(world *[][]lifeform.Lifeform) {
 //Main entry
 func main() {
 	Scanner := bufio.NewScanner(os.Stdin)
-	l := []int{2, 3}
-	d := []int{3}
 Start:
 	world = lifeform.Newworld(200, 100)
 	game := true
-	fmt.Println("Game of Life - press 'n' for new generated world, 'q' to quit, 'g' for GUI low res version, 'r' to change game rules - or press enter to run 1 cycle")
+	fmt.Println("Game of Life Cellular Automata - Go")
+	fmt.Println("'n' for new generated world")
+	fmt.Println("'q' to quit")
+	fmt.Println("'g' for GUI low res version")
+	fmt.Println("'i' for a list of well known rules & further information")
+	fmt.Println("'r' to change game rules")
+	fmt.Println("'enter' to run 1 cycle on std out console")
 	for game == true {
 		Scanner.Scan()
 		result := Scanner.Text()
@@ -169,13 +186,27 @@ Start:
 			cycle = 0
 		case "q":
 			game = false
+		case "i":
+			fmt.Println("The B rule is how many life-forms need to be alive and adjacent to any one lifeform for it to come back alive.")
+			fmt.Println("The S rule is how many life-forms need to be alive and adjacent to any one lifeform for it to survive.")
+			fmt.Println("In order of B rule / S rule:")
+			fmt.Println("3/2,3 - Game of Life (default)")
+			fmt.Println("3/4,5,6,7,8 - Coral")
+			fmt.Println("3,6/2,3 - High Life")
+			fmt.Println("5/3,4,5 - Long Life")
+			fmt.Println("3,6,7/2,4,5- Move")
+			fmt.Println("There are many more online!")
 		case "g":
-			fmt.Println("Entering GUI version - press 'q' at any time to return to menu, or 'n' to refresh GUI version")
+			fmt.Println("Entering GUI version. Menu:")
+			fmt.Println("when in GUI mode - press 'q' at any time to return to menu")
+			fmt.Println("or press 'n' at any time to refresh GUI version")
+			fmt.Println("Press 'enter' to start GUI version...")
 			Scanner.Scan()
 			rand.Seed(time.Now().UTC().UnixNano())
 			world = lifeform.Newworld(200, 600)
 			seed(&world)
-			c.SetRect(0, 0, 200, 600)
+			p.SetRect(95, 1, 120, 10)
+			c.SetRect(1, 1, 90, 50)
 			if err := ui.Init(); err != nil {
 				log.Fatalf("failed to initialize termui: %v", err)
 			}
