@@ -28,7 +28,7 @@ Notable Life-like rules:
 - B368/S245	Morley	Named after Stephen Morley; also called Move. Supports very high-period and slow spaceships.[2][4][18]
 - B4678/S35678	Anneal	Also called the twisted majority rule. Symmetric under on-off reversal. Approximates the curve-shortening flow on the boundaries between live and dead cells.[19][20][21]
 
--more ifo here http://www.mirekw.com/ca/rullex_life.html
+-more info here http://www.mirekw.com/ca/rullex_life.html
 
 What i plan to do next:
 = Add a higher res GUI! I've managed to bungle in the canvas from termui but i'm sure there's probably a better way as termui is meant for command line GUI's.
