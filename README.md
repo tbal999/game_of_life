@@ -1,5 +1,5 @@
 # game_of_life
-A cellular automaton game engine that can handle 'Conway's Game of Life' in honour of John Horton Conway.
+A cellular automaton game engine that can run 'Conway's Game of Life' in honour of John Horton Conway.
 Can also do other different life rules via user input.
 Makes use of the awesome 'termui' (https://github.com/gizak/termui) library for the graphics.
 
