@@ -31,5 +31,5 @@ Notable Life-like rules:
 -more info here http://www.mirekw.com/ca/rullex_life.html
 
 What i plan to do next:
-= Add a higher res GUI! I've managed to bungle in the canvas from termui but i'm sure there's probably a better way as termui is meant for command line GUI's.
+- Add a higher res GUI! I've managed to bungle in the canvas from termui but i'm sure there's probably a better way as termui is meant for command line GUI's.
 - Refactor the code so it makes more sense
