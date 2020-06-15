@@ -235,12 +235,6 @@ _________        .__  .__        .__
 					case "q", "<C-c>": // press 'q' or 'C-c' to quit
 						ui.Close()
 						goto Start
-					case "<MouseLeft>":
-						payload := e.Payload.(ui.Mouse)
-						x, y := payload.X, payload.Y
-						world[y][x].Alive = 1
-						world[y][x].Next = 1
-						p.Text = fmt.Sprintf("%d, %d", x, y)
 					case "n":
 						rand.Seed(time.Now().UTC().UnixNano())
 						reset(&world)
