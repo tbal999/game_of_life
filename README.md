@@ -2,7 +2,8 @@
 A cellular automaton game engine that can run many Cellular automaton 'Life' games including 'Conway's Game of Life' in honour of John Horton Conway.
 Can also do other different life rules via user input.
 Makes use of the awesome 'termui' (https://github.com/gizak/termui) library for the graphics.
--'Day and Night' rules 
+
+- "Day and Night"
 ![Day&Night](https://raw.githubusercontent.com/tbal999/game_of_life/master/gui4.gif)
 
 - (sourced from https://en.wikipedia.org/wiki/Life-like_cellular_automaton)
