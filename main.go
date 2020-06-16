@@ -228,14 +228,29 @@ _________        .__  .__        .__
 		case "q":
 			game = false
 		case "i":
-			fmt.Println("The B rule is how many life-forms need to be alive and adjacent to any one lifeform for it to come back alive.")
-			fmt.Println("The S rule is how many life-forms need to be alive and adjacent to any one lifeform for it to survive.")
-			fmt.Println("In order of B rule / S rule:")
-			fmt.Println("3/2,3 - Game of Life (default)")
-			fmt.Println("3/4,5,6,7,8 - Coral")
-			fmt.Println("3,6/2,3 - High Life")
-			fmt.Println("5/3,4,5 - Long Life")
-			fmt.Println("3,6,7/2,4,5- Move")
+			fmt.Println(`   RULES        B and S numbers         Description
+
+2x2         - 3,6/1,2,5                 Similar to Conway's Life in character, but totally different patterns
+
+Amoeba      - 3,5,7/1,3,5,8             Forms large random areas that mimic amoebas, sometimes
+
+Life        - 3/2,3                     Conway's game of life, very chaotic but beautiful to behold
+
+Coral       - 3/4,5,6,7,8               Creates pockets of life that slowly grow and take over like Coral in the ocean
+
+Day & Night - 3,6,7,8/3,4,6,7,8         Creates very organic masses of life that tend to slowly dissapear
+
+Flakes      - 3/0,1,2,3,4,5,6,7,8       Produces beautiful flakes, starting from simple groups of cells
+
+Gnarl       - 1/1                       Start with a single dot and explodes into lots of squares
+
+Maze        - 3/1,2,3,4,5               Creates maze-like patterns. 
+
+Maze-5      - 3/1,2,3,4                 Creates slightly different maze-like patterns
+
+Maze+7      - 3,7/1,2,3,4               Adds 'mice' that run around the mazes sometimes
+
+Move        - 3,6,8/2,4,5               Very calm world`)
 			fmt.Println("There are many more online via this URL: http://www.mirekw.com/ca/rullex_life.html !")
 		case "g":
 			on = true
