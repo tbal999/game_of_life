@@ -1,6 +1,6 @@
 # game_of_life
 A cellular automaton game engine that can run many Cellular automaton 'Life' games including 'Conway's Game of Life' in honour of John Horton Conway.
-Can also do other different life rules via user input.
+Can also do other life rules via user input.
 Makes use of the awesome 'termui' (https://github.com/gizak/termui) library for the graphics.
 
 - "Day and Night"
@@ -9,7 +9,7 @@ Makes use of the awesome 'termui' (https://github.com/gizak/termui) library for 
 - (sourced from https://en.wikipedia.org/wiki/Life-like_cellular_automaton)
 There are 218 = 262,144 possible Life-like rules, only a small fraction of which have been studied in any detail. In the descriptions below, all rules are specified in Golly/RLE format.
 
-Notable Life-like rules:
+Notable Life-like rules to explore:
 
 - B1357/S1357	Replicator	Edward Fredkin's replicating automaton: every pattern is eventually replaced by multiple copies of itself.[2][3][4]
 - B2/S	Seeds	All patterns are phoenixes, meaning that every live cell immediately dies, and many patterns lead to explosive chaotic growth. However, some engineered patterns with complex behavior are known.[2][5][6]
