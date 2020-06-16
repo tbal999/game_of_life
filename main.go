@@ -137,7 +137,6 @@ func main() {
 	Scanner := bufio.NewScanner(os.Stdin)
 	world = lifeform.Newworld(200, 100)
 	rand.Seed(time.Now().UTC().UnixNano())
-	seed(&world, rate)
 Start:
 	game := true
 	fmt.Println(
@@ -156,14 +155,17 @@ _________        .__  .__        .__
         \/                         \/     \/          \/ 
 
 		`)
-	fmt.Println("'n' for new generated world")
+	fmt.Println("'n' to spawn a new generated world")
+	fmt.Println("'s' to change spawn multiplier (30000 is standard)")
+	fmt.Println("'c' to clear the world")
 	fmt.Println("'q' to quit")
-	fmt.Println("'g' for GUI low res version")
+	fmt.Println("'g' for GUI")
 	fmt.Println("'i' for a list of well known rules & further information")
-	fmt.Println("'r' to change game rules")
-	fmt.Println("'s' to change number multiplier (30000 is standard)")
+	fmt.Println("'r' to change game rules using S/B format")
+	fmt.Println("'a' to add lifeforms manually at X/Y locations on the 100x200 grid")
 	fmt.Println("'enter' to run 1 cycle on std out console")
 	for game == true {
+		fmt.Printf("Type in command here: ")
 		Scanner.Scan()
 		result := Scanner.Text()
 		switch result {
@@ -195,11 +197,33 @@ _________        .__  .__        .__
 			}
 			fmt.Println("Rules adjusted!")
 			goto Start
+		case "c":
+			reset(&world)
 		case "n":
 			rand.Seed(time.Now().UTC().UnixNano())
 			reset(&world)
 			seed(&world, rate)
 			cycle = 0
+		case "a":
+			fmt.Println("Type in X coord: ")
+			Scanner.Scan()
+			xcoord := Scanner.Text()
+			xcoordint, _ := strconv.Atoi(xcoord)
+			fmt.Println("Type in Y coord: ")
+			Scanner.Scan()
+			ycoord := Scanner.Text()
+			ycoordint, _ := strconv.Atoi(ycoord)
+			if ycoordint >= 0 && xcoordint >= 0 {
+				if ycoordint <= 200 && xcoordint <= 100 {
+					world[ycoordint][xcoordint].Alive = 1
+					world[ycoordint][xcoordint].Next = 1
+					fmt.Println("Lifeform added at points " + xcoord + " and " + ycoord)
+				} else {
+					fmt.Println(xcoord + " and/or " + ycoord + " are outside bounds of grid, try again.")
+				}
+			} else {
+				fmt.Println(xcoord + " and/or " + ycoord + " are outside bounds of grid, try again.")
+			}
 		case "q":
 			game = false
 		case "i":
@@ -211,17 +235,16 @@ _________        .__  .__        .__
 			fmt.Println("3,6/2,3 - High Life")
 			fmt.Println("5/3,4,5 - Long Life")
 			fmt.Println("3,6,7/2,4,5- Move")
-			fmt.Println("There are many more online!")
+			fmt.Println("There are many more online via this URL: http://www.mirekw.com/ca/rullex_life.html !")
 		case "g":
 			fmt.Println("Entering GUI version. Menu:")
 			fmt.Println("when in GUI mode - press 'q' at any time to return to menu")
 			fmt.Println("or press 'w'/'s' to slow down / speed the rate of change (in ms)")
 			fmt.Println("press 'n' at any time to refresh GUI version")
+			fmt.Println("press 'c' to clear GUI")
 			fmt.Println("Press 'enter' to start GUI version...")
 			Scanner.Scan()
 			rand.Seed(time.Now().UTC().UnixNano())
-			world = lifeform.Newworld(200, 600)
-			seed(&world, rate)
 			p.SetRect(95, 1, 120, 10)
 			c.SetRect(1, 1, 90, 50)
 			if err := ui.Init(); err != nil {
@@ -235,18 +258,21 @@ _________        .__  .__        .__
 					case "q", "<C-c>": // press 'q' or 'C-c' to quit
 						ui.Close()
 						goto Start
+					case "c":
+						reset(&world)
+						cycle = 0
 					case "n":
 						rand.Seed(time.Now().UTC().UnixNano())
 						reset(&world)
 						seed(&world, rate)
 						cycle = 0
 					case "s":
-						if counter > 0 {
-							counter -= 10
+						if counter > 5 {
+							counter -= 5
 						}
 					case "w":
 						if counter < 1000 {
-							counter += 10
+							counter += 5
 						}
 					}
 				// use Go's built-in tickers for updating and drawing data
