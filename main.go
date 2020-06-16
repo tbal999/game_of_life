@@ -25,6 +25,7 @@ var (
 	d       = []int{3}
 	rate    = 30000
 	counter = float64(30)
+	on      = false
 )
 
 //Prints out the array - '.' is the lifeform is alive and blank means the lifeform is dead.
@@ -237,10 +238,12 @@ _________        .__  .__        .__
 			fmt.Println("3,6,7/2,4,5- Move")
 			fmt.Println("There are many more online via this URL: http://www.mirekw.com/ca/rullex_life.html !")
 		case "g":
+			on = true
 			fmt.Println("Entering GUI version. Menu:")
 			fmt.Println("when in GUI mode - press 'q' at any time to return to menu")
 			fmt.Println("or press 'w'/'s' to slow down / speed the rate of change (in ms)")
 			fmt.Println("press 'n' at any time to refresh GUI version")
+			fmt.Println("press  'p' to pause/play")
 			fmt.Println("press 'c' to clear GUI")
 			fmt.Println("Press 'enter' to start GUI version...")
 			Scanner.Scan()
@@ -274,12 +277,31 @@ _________        .__  .__        .__
 						if counter < 1000 {
 							counter += 5
 						}
+					case "p":
+						if on == true {
+							on = false
+						} else {
+							on = true
+						}
+					case "<MouseLeft>":
+						payload := e.Payload.(ui.Mouse)
+						x, y := payload.X, payload.Y
+						yr := y * 7
+						if yr >= 0 && x >= 0 {
+							if yr <= 200 && x <= 100 {
+								world[yr][x].Alive = 1
+								world[yr][x].Next = 1
+							}
+						}
 					}
 				// use Go's built-in tickers for updating and drawing data
 				case <-time.After(time.Duration(counter) * time.Millisecond):
-					cycle++
-					lifeform.Adjust(&world, l, d)
-					guiframe(world)
+					switch on {
+					case true:
+						cycle++
+						lifeform.Adjust(&world, l, d)
+						guiframe(world)
+					}
 				}
 			}
 		default:
